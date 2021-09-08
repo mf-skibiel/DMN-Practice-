@@ -75,42 +75,24 @@
       <dmn:formalParameter id="_C6A09738-0A84-403F-8E1F-77EEE0F1EA53" name="Info"/>
       <dmn:context id="_E9CE1B71-A8E7-4089-B97C-D12D2871BAA8">
         <dmn:contextEntry>
-          <dmn:variable id="_E5463010-F4FB-4067-875C-31E2E437D562" name="location" typeRef="tCaseRecord"/>
-          <dmn:literalExpression id="_45AC1807-0C4C-4A0D-985F-4578B6051B6C">
-            <dmn:text>Case.Location</dmn:text>
-          </dmn:literalExpression>
-        </dmn:contextEntry>
-        <dmn:contextEntry>
-          <dmn:variable id="_7504E4C1-A455-4ED4-ACC8-4F0C32532278" name="type" typeRef="tCaseRecord"/>
-          <dmn:literalExpression id="_79C46F71-F423-4269-A7BA-AB8D55C6DDD5">
-            <dmn:text>Case.Type</dmn:text>
-          </dmn:literalExpression>
-        </dmn:contextEntry>
-        <dmn:contextEntry>
-          <dmn:variable id="_AD205A79-99F7-48BA-BB21-15038C34FFA4" name="name" typeRef="string"/>
-          <dmn:literalExpression id="_5EDE8A37-1708-41FA-AF77-8C37107CF862">
-            <dmn:text>name</dmn:text>
-          </dmn:literalExpression>
-        </dmn:contextEntry>
-        <dmn:contextEntry>
           <dmn:variable id="_F1FCEAEF-F4A5-4004-A97C-350C93A71BD1" name="Email Contents" typeRef="tEmails"/>
           <dmn:context id="_1158831B-1A14-448F-83BD-3A81A87ED388">
             <dmn:contextEntry>
               <dmn:variable id="_CEA63061-653E-400A-8D22-801E64BDBECE" name="address" typeRef="string"/>
               <dmn:literalExpression id="_99173483-5A1F-414C-94FD-CCC9699F0878">
-                <dmn:text>Staff to Email[</dmn:text>
+                <dmn:text>Info.email</dmn:text>
               </dmn:literalExpression>
             </dmn:contextEntry>
             <dmn:contextEntry>
               <dmn:variable id="_8FB76272-512A-441A-8CD1-1771660C731A" name="title" typeRef="string"/>
               <dmn:literalExpression id="_F8D7E07F-F027-44F8-BA00-6E92C2BBF778">
-                <dmn:text>type "created"</dmn:text>
+                <dmn:text>Info.CaseID "created"</dmn:text>
               </dmn:literalExpression>
             </dmn:contextEntry>
             <dmn:contextEntry>
               <dmn:variable id="_7919420B-0997-4894-9B38-409F5B5A12AD" name="body" typeRef="string"/>
               <dmn:literalExpression id="_2D376F4D-26D7-4B98-8077-9699A7110B46">
-                <dmn:text>"Hello {name} a {type} has been created at {location}."</dmn:text>
+                <dmn:text>"Hello {Info.name} a {Info.Type} has been created at {Info.Location}."</dmn:text>
               </dmn:literalExpression>
             </dmn:contextEntry>
           </dmn:context>
@@ -145,7 +127,7 @@
       <dmn:binding>
         <dmn:parameter id="_44428CA3-3750-4E39-B715-81A39D324D77" name="Info"/>
         <dmn:literalExpression id="_D74AF454-C368-4A22-A015-20E69BF8CBF9">
-          <dmn:text>Email builder? </dmn:text>
+          <dmn:text>Staff to Email.Email Details</dmn:text>
         </dmn:literalExpression>
       </dmn:binding>
     </dmn:invocation>
@@ -202,6 +184,12 @@
               <dmn:text>Case.Location</dmn:text>
             </dmn:literalExpression>
           </dmn:contextEntry>
+          <dmn:contextEntry>
+            <dmn:variable id="_99B49935-D92D-4029-9348-BCF444E38D6B" name="CaseID" typeRef="string"/>
+            <dmn:literalExpression id="_B90AB061-CF94-4E37-A05F-7846ECF217F7">
+              <dmn:text>Case.CaseID</dmn:text>
+            </dmn:literalExpression>
+          </dmn:contextEntry>
         </dmn:context>
       </dmn:contextEntry>
       <dmn:contextEntry>
@@ -218,15 +206,6 @@
           <kie:ComponentWidths dmnElementRef="_E9CE1B71-A8E7-4089-B97C-D12D2871BAA8">
             <kie:width>50</kie:width>
             <kie:width>100</kie:width>
-            <kie:width>470</kie:width>
-          </kie:ComponentWidths>
-          <kie:ComponentWidths dmnElementRef="_45AC1807-0C4C-4A0D-985F-4578B6051B6C">
-            <kie:width>470</kie:width>
-          </kie:ComponentWidths>
-          <kie:ComponentWidths dmnElementRef="_79C46F71-F423-4269-A7BA-AB8D55C6DDD5">
-            <kie:width>470</kie:width>
-          </kie:ComponentWidths>
-          <kie:ComponentWidths dmnElementRef="_5EDE8A37-1708-41FA-AF77-8C37107CF862">
             <kie:width>470</kie:width>
           </kie:ComponentWidths>
           <kie:ComponentWidths dmnElementRef="_1158831B-1A14-448F-83BD-3A81A87ED388">
@@ -293,6 +272,9 @@
           <kie:ComponentWidths dmnElementRef="_F1B1ACB2-54B8-428B-90E7-BF773687CD51">
             <kie:width>300</kie:width>
           </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_B90AB061-CF94-4E37-A05F-7846ECF217F7">
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
           <kie:ComponentWidths dmnElementRef="_5678CE9A-5DF6-4CC7-AB06-BBA018348FA8">
             <kie:width>470</kie:width>
           </kie:ComponentWidths>
@@ -331,7 +313,7 @@
           <dmndi:StrokeColor red="0" green="0" blue="0"/>
           <dmndi:FontColor red="0" green="0" blue="0"/>
         </dmndi:DMNStyle>
-        <dc:Bounds x="596" y="163" width="100" height="50"/>
+        <dc:Bounds x="597" y="163" width="100" height="50"/>
         <dmndi:DMNLabel/>
       </dmndi:DMNShape>
       <dmndi:DMNShape id="dmnshape-drg-_6562D679-AD00-48B7-A993-26C195DB4A73" dmnElementRef="_6562D679-AD00-48B7-A993-26C195DB4A73" isCollapsed="false">

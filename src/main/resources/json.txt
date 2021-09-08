@@ -1,0 +1,21 @@
+{
+    "Staff" : [{
+       "Name" : "Sam Poe",
+       "Position": "Lead Surgeon",
+       "Phone": "919-370-1234",
+       "Email": "sp@imail.com"
+    },{
+      "Name" : "Brandy Miller",
+      "Position": "Assist Surgeon",
+      "Phone": "202-468-0987",
+      "Email": "bm@imail.com"  
+    }],
+    "Case" :[{
+        "CaseID" : "ABC1234",
+        "Location": "Silver-Spring",
+        "Type": "Research"
+    }],
+    "Event" : [{
+        "Event-Type" : "Case-Created",
+        "Event-Time": "14:00"
+    }]

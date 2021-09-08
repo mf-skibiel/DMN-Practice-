@@ -125,7 +125,7 @@
           <dmndi:StrokeColor red="0" green="0" blue="0"></dmndi:StrokeColor>
           <dmndi:FontColor red="0" green="0" blue="0"></dmndi:FontColor>
         </dmndi:DMNStyle>
-        <dc:Bounds x="596" y="163" width="100" height="50"></dc:Bounds>
+        <dc:Bounds x="597" y="163" width="100" height="50"></dc:Bounds>
         <dmndi:DMNLabel></dmndi:DMNLabel>
       </dmndi:DMNShape>
       <dmndi:DMNShape id="dmnshape-drg-_6562D679-AD00-48B7-A993-26C195DB4A73" dmnElementRef="_6562D679-AD00-48B7-A993-26C195DB4A73" isCollapsed="false">
