@@ -67,45 +67,12 @@
     <dmn:extensionElements/>
     <dmn:variable id="_4E8D517F-87DF-4BFA-81FC-670B084582C0" name="Event"/>
   </dmn:inputData>
-  <dmn:decision id="_414B4DA1-90C7-41BC-875C-462B70BA15E5" name="Staff to Email">
-    <dmn:extensionElements/>
-    <dmn:variable id="_4925EA6E-5F4E-4B5F-AFC8-A8B3E66B8FE4" name="Staff to Email" typeRef="string"/>
-    <dmn:informationRequirement id="_AACDE341-1BBE-420F-B927-1FEBDE0DBFD8">
-      <dmn:requiredInput href="#_C68E16A5-FBE6-464B-AF16-485C2528F7C3"/>
-    </dmn:informationRequirement>
-    <dmn:informationRequirement id="_7BAADABC-CE9F-4FBF-8356-2E7065E607A2">
-      <dmn:requiredInput href="#_4CFA965A-3AE7-42E3-9374-E1C144636F17"/>
-    </dmn:informationRequirement>
-    <dmn:informationRequirement id="_218F85D8-C010-411C-86EE-E617744FDAE8">
-      <dmn:requiredInput href="#_2F78108C-AD4C-48C9-98CD-95ABF1301E72"/>
-    </dmn:informationRequirement>
-    <dmn:context id="_E64DD14E-0A59-43B3-B91E-91E5C7CC13C6">
-      <dmn:contextEntry>
-        <dmn:variable id="_2243EBAC-9E34-4037-BE6C-FB4E458C96FA" name="CaseType" typeRef="tStaffList"/>
-        <dmn:literalExpression id="_4C9A842C-7968-4A54-8515-20319E3DAC78">
-          <dmn:text>Case.Type</dmn:text>
-        </dmn:literalExpression>
-      </dmn:contextEntry>
-      <dmn:contextEntry>
-        <dmn:variable id="_7D10372E-9BC6-4AC4-8173-CEB6F50F348B" name="stafftoEmail" typeRef="tCaseRecord"/>
-        <dmn:literalExpression id="_43667823-3145-41B4-83A1-705175ECA4E5">
-          <dmn:text>if CaseType = "Research" then Staff[Position = "Assist Surgeon"] else Staff[Position = "Lead Surgeon"]</dmn:text>
-        </dmn:literalExpression>
-      </dmn:contextEntry>
-      <dmn:contextEntry>
-        <dmn:literalExpression id="_DFD5D304-2E54-4FF5-BE3E-4D0BF444DF94">
-          <dmn:text>return stafftoEmail</dmn:text>
-        </dmn:literalExpression>
-      </dmn:contextEntry>
-    </dmn:context>
-  </dmn:decision>
   <dmn:businessKnowledgeModel id="_DB155ABB-29CD-4EEE-B334-275B685FAFAA" name="email builder">
     <dmn:extensionElements/>
     <dmn:variable id="_5C2E672A-E5C3-47A6-8AF4-73080E3288B6" name="email builder"/>
     <dmn:encapsulatedLogic id="_E1F4B4EC-0D8B-4243-9F82-D8BB6D30460D" kind="FEEL">
-      <dmn:formalParameter id="_5128BB7F-24A4-4650-8959-E453CCEBDA9C" name="Receiver" typeRef="string"/>
-      <dmn:formalParameter id="_392DCA2C-A157-4462-A0AB-17DF7C662A1E" name="Case" typeRef="tCaseRecord"/>
-      <dmn:formalParameter id="_D91A7454-8812-410F-92BC-94B109F0CD7E" name="Event" typeRef="tEvent"/>
+      <dmn:formalParameter id="_40F4DB59-6BFB-499B-8BE2-54F2023BB96D" name="Email List" typeRef="tEmails"/>
+      <dmn:formalParameter id="_C6A09738-0A84-403F-8E1F-77EEE0F1EA53" name="Info"/>
       <dmn:context id="_E9CE1B71-A8E7-4089-B97C-D12D2871BAA8">
         <dmn:contextEntry>
           <dmn:variable id="_E5463010-F4FB-4067-875C-31E2E437D562" name="location" typeRef="tCaseRecord"/>
@@ -122,30 +89,132 @@
         <dmn:contextEntry>
           <dmn:variable id="_AD205A79-99F7-48BA-BB21-15038C34FFA4" name="name" typeRef="string"/>
           <dmn:literalExpression id="_5EDE8A37-1708-41FA-AF77-8C37107CF862">
-            <dmn:text>Staff.Name</dmn:text>
+            <dmn:text>name</dmn:text>
+          </dmn:literalExpression>
+        </dmn:contextEntry>
+        <dmn:contextEntry>
+          <dmn:variable id="_F1FCEAEF-F4A5-4004-A97C-350C93A71BD1" name="Email Contents" typeRef="tEmails"/>
+          <dmn:context id="_1158831B-1A14-448F-83BD-3A81A87ED388">
+            <dmn:contextEntry>
+              <dmn:variable id="_CEA63061-653E-400A-8D22-801E64BDBECE" name="address" typeRef="string"/>
+              <dmn:literalExpression id="_99173483-5A1F-414C-94FD-CCC9699F0878">
+                <dmn:text>Staff to Email[</dmn:text>
+              </dmn:literalExpression>
+            </dmn:contextEntry>
+            <dmn:contextEntry>
+              <dmn:variable id="_8FB76272-512A-441A-8CD1-1771660C731A" name="title" typeRef="string"/>
+              <dmn:literalExpression id="_F8D7E07F-F027-44F8-BA00-6E92C2BBF778">
+                <dmn:text>type "created"</dmn:text>
+              </dmn:literalExpression>
+            </dmn:contextEntry>
+            <dmn:contextEntry>
+              <dmn:variable id="_7919420B-0997-4894-9B38-409F5B5A12AD" name="body" typeRef="string"/>
+              <dmn:literalExpression id="_2D376F4D-26D7-4B98-8077-9699A7110B46">
+                <dmn:text>"Hello {name} a {type} has been created at {location}."</dmn:text>
+              </dmn:literalExpression>
+            </dmn:contextEntry>
+          </dmn:context>
+        </dmn:contextEntry>
+        <dmn:contextEntry>
+          <dmn:variable id="_6AF6B18F-88AD-4B9A-8D34-74FBE5DFEB9E" name="Email List" typeRef="tEmails"/>
+          <dmn:literalExpression id="_5A75B93E-7C7B-45EF-9B79-4162B5C83498">
+            <dmn:text>append (Email List, Email Contents)</dmn:text>
+          </dmn:literalExpression>
+        </dmn:contextEntry>
+        <dmn:contextEntry>
+          <dmn:literalExpression id="_8D0BA141-C962-40F5-B4A1-46FDEC8BE0B5">
+            <dmn:text>return Email List</dmn:text>
           </dmn:literalExpression>
         </dmn:contextEntry>
       </dmn:context>
     </dmn:encapsulatedLogic>
   </dmn:businessKnowledgeModel>
+  <dmn:decision id="_6562D679-AD00-48B7-A993-26C195DB4A73" name="Email">
+    <dmn:extensionElements/>
+    <dmn:variable id="_11080EDB-6BB6-49BB-A0B2-CB7FD23AFDE0" name="Email" typeRef="tEmails"/>
+    <dmn:invocation id="_0C9FFFFD-C491-44B9-BA66-BCF638CAD986">
+      <dmn:literalExpression id="_24A688C3-8BE0-448F-891D-A86492EBCC37">
+        <dmn:text>email builder </dmn:text>
+      </dmn:literalExpression>
+      <dmn:binding>
+        <dmn:parameter id="_83F1E432-EA48-4FB0-BE06-B44CF895FAFB" name="Email List"/>
+        <dmn:literalExpression id="_9A1E344F-DAFC-47C4-BDD0-8CB70CDCAF6B">
+          <dmn:text>[]</dmn:text>
+        </dmn:literalExpression>
+      </dmn:binding>
+      <dmn:binding>
+        <dmn:parameter id="_44428CA3-3750-4E39-B715-81A39D324D77" name="Info"/>
+        <dmn:literalExpression id="_D74AF454-C368-4A22-A015-20E69BF8CBF9">
+          <dmn:text>Email builder? </dmn:text>
+        </dmn:literalExpression>
+      </dmn:binding>
+    </dmn:invocation>
+  </dmn:decision>
+  <dmn:decision id="_AB780C4B-20E8-4ECA-8C44-10A718FA282A" name="Staff to Email">
+    <dmn:extensionElements/>
+    <dmn:variable id="_F53AF2DE-4B12-4BC9-9F0E-A915CBDF0AE7" name="Staff to Email" typeRef="tStaffList"/>
+    <dmn:informationRequirement id="_93E2FD08-3464-4E94-B581-699C557332C4">
+      <dmn:requiredInput href="#_C68E16A5-FBE6-464B-AF16-485C2528F7C3"/>
+    </dmn:informationRequirement>
+    <dmn:informationRequirement id="_F5758FA8-6D98-4DC1-924A-BF90616434B2">
+      <dmn:requiredInput href="#_4CFA965A-3AE7-42E3-9374-E1C144636F17"/>
+    </dmn:informationRequirement>
+    <dmn:informationRequirement id="_E2DF794D-FDB5-4844-AF2C-7D6EAE7C70DB">
+      <dmn:requiredInput href="#_2F78108C-AD4C-48C9-98CD-95ABF1301E72"/>
+    </dmn:informationRequirement>
+    <dmn:context id="_0ED0F782-70E1-4D0E-98D6-7185AC84A2FD">
+      <dmn:contextEntry>
+        <dmn:variable id="_AE13A62F-20E5-4C64-89CA-3DF692187F53" name="Case Type" typeRef="string"/>
+        <dmn:literalExpression id="_423CD236-CA2A-4FC9-865F-9BF2367DAB9F">
+          <dmn:text>Case.Type</dmn:text>
+        </dmn:literalExpression>
+      </dmn:contextEntry>
+      <dmn:contextEntry>
+        <dmn:variable id="_98289E27-AA57-4BC9-88A4-6B16CC99F1B9" name="Surgeon" typeRef="tStaff"/>
+        <dmn:literalExpression id="_08EA9403-B732-456F-957E-0F5417FD5DCE">
+          <dmn:text>if Case Type = "Research" then Staff[Position = "Assist Surgeon"] else Staff[Position = "Lead Surgeon"]</dmn:text>
+        </dmn:literalExpression>
+      </dmn:contextEntry>
+      <dmn:contextEntry>
+        <dmn:variable id="_E183DE0A-4E00-4520-82A6-FFEFF7FA5A41" name="Email Details" typeRef="context"/>
+        <dmn:context id="_589E7C93-6144-4553-9337-EA353B1AAFA5">
+          <dmn:contextEntry>
+            <dmn:variable id="_4A62AEF4-2B33-4AA1-B91E-DB3D025A638E" name="name" typeRef="string"/>
+            <dmn:literalExpression id="_0F7E8D4C-F898-4E6F-82EE-4D96CDD6E016">
+              <dmn:text>Surgeon.Name</dmn:text>
+            </dmn:literalExpression>
+          </dmn:contextEntry>
+          <dmn:contextEntry>
+            <dmn:variable id="_AF0933A6-08B2-4949-974B-A1A1299AAEB2" name="email" typeRef="string"/>
+            <dmn:literalExpression id="_06B6AC7D-F702-4807-BC94-91F642F1413C">
+              <dmn:text>Surgeon.Email</dmn:text>
+            </dmn:literalExpression>
+          </dmn:contextEntry>
+          <dmn:contextEntry>
+            <dmn:variable id="_ACD200A0-7D6F-4687-8E76-8BABAAA4DE26" name="Type" typeRef="string"/>
+            <dmn:literalExpression id="_5BB90B65-CC2C-4A8D-A3CB-EB75BE5132C4">
+              <dmn:text>Case Type</dmn:text>
+            </dmn:literalExpression>
+          </dmn:contextEntry>
+          <dmn:contextEntry>
+            <dmn:variable id="_20E2D39C-7077-478C-9EE7-A6535A7ECD2B" name="Location" typeRef="string"/>
+            <dmn:literalExpression id="_F1B1ACB2-54B8-428B-90E7-BF773687CD51">
+              <dmn:text>Case.Location</dmn:text>
+            </dmn:literalExpression>
+          </dmn:contextEntry>
+        </dmn:context>
+      </dmn:contextEntry>
+      <dmn:contextEntry>
+        <dmn:literalExpression id="_5678CE9A-5DF6-4CC7-AB06-BBA018348FA8">
+          <dmn:text>return Email Details</dmn:text>
+        </dmn:literalExpression>
+      </dmn:contextEntry>
+    </dmn:context>
+  </dmn:decision>
   <dmndi:DMNDI>
     <dmndi:DMNDiagram id="_4054C4B7-2708-4FAF-8EDF-A6292B327D63" name="DRG">
       <di:extension>
         <kie:ComponentsWidthsExtension>
-          <kie:ComponentWidths dmnElementRef="_E64DD14E-0A59-43B3-B91E-91E5C7CC13C6">
-            <kie:width>50</kie:width>
-            <kie:width>137</kie:width>
-            <kie:width>733</kie:width>
-          </kie:ComponentWidths>
-          <kie:ComponentWidths dmnElementRef="_4C9A842C-7968-4A54-8515-20319E3DAC78">
-            <kie:width>733</kie:width>
-          </kie:ComponentWidths>
-          <kie:ComponentWidths dmnElementRef="_43667823-3145-41B4-83A1-705175ECA4E5">
-            <kie:width>733</kie:width>
-          </kie:ComponentWidths>
-          <kie:ComponentWidths dmnElementRef="_DFD5D304-2E54-4FF5-BE3E-4D0BF444DF94">
-            <kie:width>733</kie:width>
-          </kie:ComponentWidths>
           <kie:ComponentWidths dmnElementRef="_E9CE1B71-A8E7-4089-B97C-D12D2871BAA8">
             <kie:width>50</kie:width>
             <kie:width>100</kie:width>
@@ -160,9 +229,72 @@
           <kie:ComponentWidths dmnElementRef="_5EDE8A37-1708-41FA-AF77-8C37107CF862">
             <kie:width>470</kie:width>
           </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_1158831B-1A14-448F-83BD-3A81A87ED388">
+            <kie:width>50</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_99173483-5A1F-414C-94FD-CCC9699F0878">
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_F8D7E07F-F027-44F8-BA00-6E92C2BBF778">
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_2D376F4D-26D7-4B98-8077-9699A7110B46">
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_5A75B93E-7C7B-45EF-9B79-4162B5C83498">
+            <kie:width>470</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_8D0BA141-C962-40F5-B4A1-46FDEC8BE0B5">
+            <kie:width>470</kie:width>
+          </kie:ComponentWidths>
           <kie:ComponentWidths dmnElementRef="_E1F4B4EC-0D8B-4243-9F82-D8BB6D30460D">
             <kie:width>50</kie:width>
             <kie:width>640</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_0C9FFFFD-C491-44B9-BA66-BCF638CAD986">
+            <kie:width>50</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_24A688C3-8BE0-448F-891D-A86492EBCC37"/>
+          <kie:ComponentWidths dmnElementRef="_9A1E344F-DAFC-47C4-BDD0-8CB70CDCAF6B">
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_D74AF454-C368-4A22-A015-20E69BF8CBF9">
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_0ED0F782-70E1-4D0E-98D6-7185AC84A2FD">
+            <kie:width>50</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>470</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_423CD236-CA2A-4FC9-865F-9BF2367DAB9F">
+            <kie:width>470</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_08EA9403-B732-456F-957E-0F5417FD5DCE">
+            <kie:width>470</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_589E7C93-6144-4553-9337-EA353B1AAFA5">
+            <kie:width>50</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_0F7E8D4C-F898-4E6F-82EE-4D96CDD6E016">
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_06B6AC7D-F702-4807-BC94-91F642F1413C">
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_5BB90B65-CC2C-4A8D-A3CB-EB75BE5132C4">
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_F1B1ACB2-54B8-428B-90E7-BF773687CD51">
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_5678CE9A-5DF6-4CC7-AB06-BBA018348FA8">
+            <kie:width>470</kie:width>
           </kie:ComponentWidths>
         </kie:ComponentsWidthsExtension>
       </di:extension>
@@ -193,15 +325,6 @@
         <dc:Bounds x="543" y="343.3421052631579" width="100" height="50"/>
         <dmndi:DMNLabel/>
       </dmndi:DMNShape>
-      <dmndi:DMNShape id="dmnshape-drg-_414B4DA1-90C7-41BC-875C-462B70BA15E5" dmnElementRef="_414B4DA1-90C7-41BC-875C-462B70BA15E5" isCollapsed="false">
-        <dmndi:DMNStyle>
-          <dmndi:FillColor red="255" green="255" blue="255"/>
-          <dmndi:StrokeColor red="0" green="0" blue="0"/>
-          <dmndi:FontColor red="0" green="0" blue="0"/>
-        </dmndi:DMNStyle>
-        <dc:Bounds x="325" y="152" width="115" height="62"/>
-        <dmndi:DMNLabel/>
-      </dmndi:DMNShape>
       <dmndi:DMNShape id="dmnshape-drg-_DB155ABB-29CD-4EEE-B334-275B685FAFAA" dmnElementRef="_DB155ABB-29CD-4EEE-B334-275B685FAFAA" isCollapsed="false">
         <dmndi:DMNStyle>
           <dmndi:FillColor red="255" green="255" blue="255"/>
@@ -211,17 +334,35 @@
         <dc:Bounds x="596" y="163" width="100" height="50"/>
         <dmndi:DMNLabel/>
       </dmndi:DMNShape>
-      <dmndi:DMNEdge id="dmnedge-drg-_AACDE341-1BBE-420F-B927-1FEBDE0DBFD8-AUTO-TARGET" dmnElementRef="_AACDE341-1BBE-420F-B927-1FEBDE0DBFD8">
+      <dmndi:DMNShape id="dmnshape-drg-_6562D679-AD00-48B7-A993-26C195DB4A73" dmnElementRef="_6562D679-AD00-48B7-A993-26C195DB4A73" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="442" y="38" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-drg-_AB780C4B-20E8-4ECA-8C44-10A718FA282A" dmnElementRef="_AB780C4B-20E8-4ECA-8C44-10A718FA282A" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="340" y="191" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="dmnedge-drg-_93E2FD08-3464-4E94-B581-699C557332C4-AUTO-TARGET" dmnElementRef="_93E2FD08-3464-4E94-B581-699C557332C4">
         <di:waypoint x="184.59813084112147" y="368.68421052631584"/>
-        <di:waypoint x="382.5" y="214"/>
+        <di:waypoint x="390" y="241"/>
       </dmndi:DMNEdge>
-      <dmndi:DMNEdge id="dmnedge-drg-_7BAADABC-CE9F-4FBF-8356-2E7065E607A2" dmnElementRef="_7BAADABC-CE9F-4FBF-8356-2E7065E607A2">
+      <dmndi:DMNEdge id="dmnedge-drg-_F5758FA8-6D98-4DC1-924A-BF90616434B2" dmnElementRef="_F5758FA8-6D98-4DC1-924A-BF90616434B2">
         <di:waypoint x="382.3222719555487" y="431"/>
-        <di:waypoint x="382.5" y="214"/>
+        <di:waypoint x="390" y="241"/>
       </dmndi:DMNEdge>
-      <dmndi:DMNEdge id="dmnedge-drg-_218F85D8-C010-411C-86EE-E617744FDAE8" dmnElementRef="_218F85D8-C010-411C-86EE-E617744FDAE8">
+      <dmndi:DMNEdge id="dmnedge-drg-_E2DF794D-FDB5-4844-AF2C-7D6EAE7C70DB-AUTO-TARGET" dmnElementRef="_E2DF794D-FDB5-4844-AF2C-7D6EAE7C70DB">
         <di:waypoint x="593" y="368.3421052631579"/>
-        <di:waypoint x="382.5" y="214"/>
+        <di:waypoint x="390" y="241"/>
       </dmndi:DMNEdge>
     </dmndi:DMNDiagram>
   </dmndi:DMNDI>
